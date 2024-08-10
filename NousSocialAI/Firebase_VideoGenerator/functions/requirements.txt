@@ -1,0 +1,10 @@
+firebase_functions~=0.1.0
+google-api-python-client
+google-auth 
+google-auth-oauthlib 
+google-auth-httplib2
+matplotlib
+moviepy
+numpy
+pandas
+ffmpeg-python==0.2.0
