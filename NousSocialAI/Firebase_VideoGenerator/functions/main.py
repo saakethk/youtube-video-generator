@@ -174,10 +174,8 @@ class YouTubeVideo():
             scopes=SCOPES
         )
 
-        if not creds or not creds.valid:
-            if creds and creds.expired and creds.refresh_token:
-                creds.refresh(Request())
-                self.firebase.updateYouTubeToken(creds.to_json())
+        creds.refresh(Request())
+        self.firebase.updateYouTubeToken(creds.to_json())
 
         try:
             service = build(API_SERVICE_NAME, API_VERSION, credentials=creds, static_discovery=False)
@@ -214,7 +212,7 @@ class YouTubeVideo():
                 'tags': ['tags']
             },
             'status': {
-                'privacyStatus': 'private',
+                'privacyStatus': 'public',
                 'publishedAt': self.upload_time,
                 'selfDeclaredMadeForKids': False
             },
@@ -261,6 +259,7 @@ class YouTubeVideo():
 
             self.status["thumbnail"] = {
                 "success": True,
+                "thumbnail": response_thumbnail_upload.get("items")[0]["medium"]["url"],
                 "updated": datetime.now()
             }
 
@@ -276,6 +275,18 @@ class YouTubeVideo():
             }
             
             return self.status
+
+    # Adds default thumbnail
+    @detectFault
+    def addThumbnail(self, thumbnail_url: str):
+          
+        self.status["thumbnail"] = {
+            "success": True,
+            "thumbnail": thumbnail_url,
+            "updated": datetime.now()
+        }
+
+        return self.status
     
     # Adds to YouTube playlist (Quota Cost: 50 units)
     @detectFault
@@ -289,7 +300,7 @@ class YouTubeVideo():
                 'playlistId': playlist_id,
                 'resourceId': {
                     "kind": "youtube#video",
-                    "videoId": self.published_videos[-1].video_id,
+                    "videoId": self.status["uploaded"]["video_id"],
                 }
             }
         }
@@ -336,7 +347,7 @@ class YouTubeVideo():
     def updateStatus(self):
         
         if (self.status["uploaded"]["success"]):
-            Firebase.updateStatus(
+            self.firebase.updateStatus(
                 "social",
                 {
                     self.status["uploaded"]["video_id"]: {
@@ -618,7 +629,7 @@ class Graphics():
                 line["graphic"]
             ), 
             xo = 67, 
-            yo = 868, 
+            yo = 950, 
             origin ='upper'
         )
 
@@ -661,7 +672,7 @@ class Graphics():
                 line["graphic"]
             ), 
             xo = 67, 
-            yo = 868, 
+            yo = 920, 
             origin ='upper'
         )
 
@@ -920,6 +931,11 @@ class YouTubeUploader():
         vid_file = self.vidGen.genComedyVid()
         vid.uploadVideo(vid_file.name)
 
+        # Adds default thumbnail
+        vid.addThumbnail(
+            "https://storage.googleapis.com/itsnousv3.appspot.com/YouTubeDefaults/comedyBackgroundThumbnail.png"
+        )
+
         # Adds vid to playlist and cleans up temp files
         vid.addPlaylist("PLizmHl7t7otfGrDlRY195hn0aslP8jiPS")
         vid_file.close()
@@ -944,6 +960,11 @@ class YouTubeUploader():
         vid_file = self.vidGen.genFactVid()
         vid.uploadVideo(vid_file.name)
 
+        # Adds default thumbnail
+        vid.addThumbnail(
+            "https://storage.googleapis.com/itsnousv3.appspot.com/YouTubeDefaults/factBackgroundThumbnail.png"
+        )
+
         # Adds vid to playlist and cleans up temp files
         vid.addPlaylist("PLizmHl7t7otebrMZtCzxbnqG5krTysXRU")
         vid_file.close()
@@ -959,10 +980,12 @@ class YouTubeUploader():
         vid_info = self.vidGen.retrieveVidInfo(2)
         category_id = 27 # Education
         vid = YouTubeVideo(
-            vid_info["title"],
+            f"{vid_info['title']}",
             vid_info["description"],
             category_id
         )
+        episode_number = vid.retrievePlaylist("PLizmHl7t7otdmEFw5RMV4tXdGNWklNk1d")+1
+        vid.title = f"{vid_info['title']} (Episode #{episode_number})"
 
         # Generates vid and uploads video
         vid_file = self.vidGen.genWallstreetWavesVid()
@@ -970,11 +993,16 @@ class YouTubeUploader():
 
         # Creates and sets thumbnail
         thumbnail = self.graphics.genWallStreetWavesThumbnail(
-            vid.retrievePlaylist("PLizmHl7t7otdmEFw5RMV4tXdGNWklNk1d")+1
+            episode_number
         )
         vid.setThumbnail(thumbnail.name)
         thumbnail.close()
         os.unlink(thumbnail.name)
+
+        # Adds default thumbnail
+        vid.addThumbnail(
+            "https://storage.googleapis.com/itsnousv3.appspot.com/GraphicsTemplates/wallStreetWavesThumbnailTemplate.png"
+        )
 
         # Adds vid to playlist and cleans up temp files
         vid.addPlaylist("PLizmHl7t7otdmEFw5RMV4tXdGNWklNk1d")
@@ -1005,3 +1033,4 @@ def uploadVideosDaily(event: scheduler_fn.ScheduledEvent) -> None:
     youtubeUpload.createWallstreetWavesVid()
     
     return https_fn.Response("Success")
+
