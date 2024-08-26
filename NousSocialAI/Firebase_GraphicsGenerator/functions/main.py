@@ -578,7 +578,7 @@ class WallstreetWavesScript():
                                 f"And {name} will release earnings in {data_entry['dateFromNow']} days.",
                                 self.graphic.genNewsGraphic(
                                     self.asset_id,
-                                    "https://static-00.iconduck.com/assets.00/square-cash-icon-2048x2048-b2cgacnc.png",
+                                    "https://storage.googleapis.com/itsnousv3.appspot.com/GraphicsTemplates/defaultNewsIcon.png",
                                     name,
                                     f"Earnings in {data_entry['dateFromNow']} days"
                                 )
@@ -591,7 +591,7 @@ class WallstreetWavesScript():
                                 f"{name} will release earnings in {data_entry['dateFromNow']} days.",
                                 self.graphic.genNewsGraphic(
                                     self.asset_id,
-                                    "https://static-00.iconduck.com/assets.00/square-cash-icon-2048x2048-b2cgacnc.png",
+                                    "https://storage.googleapis.com/itsnousv3.appspot.com/GraphicsTemplates/defaultNewsIcon.png",
                                     name,
                                     f"Earnings in {data_entry['dateFromNow']} days"
                                 )

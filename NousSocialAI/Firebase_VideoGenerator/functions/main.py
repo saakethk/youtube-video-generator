@@ -127,7 +127,7 @@ class YouTubeVideo():
     """
 
     # Vars neccessary for YouTube Data API V3
-    def __init__(self, title: str, description: str, category_id: int):
+    def __init__(self, title: str, description: str):
         self.credentials = "Credentials/client_NousSocialAIV1.json"
         self.api_name = "youtube"
         self.version = "v3"
@@ -151,7 +151,6 @@ class YouTubeVideo():
         # Video upload defaults
         self.title = title
         self.description = description
-        self.category_id = category_id
         self.upload_time = datetime.now().isoformat() + '.000Z'
         self.max_retries = 10
         self.status = {}
@@ -202,14 +201,14 @@ class YouTubeVideo():
     
     # Uploads video with private status to YouTube (Quota Cost: 1600 units)
     @detectFault
-    def uploadVideo(self, video_file: str):
+    def uploadVideo(self, video_file: str, tags: list, category_id: str):
         
         video_metadata = {
             'snippet': {
                 'title': self.title,
                 'description': self.description,
-                'categoryId': 27,
-                'tags': ['tags']
+                'categoryId': category_id,
+                'tags': tags
             },
             'status': {
                 'privacyStatus': 'public',
@@ -920,16 +919,18 @@ class YouTubeUploader():
         
         # Initializes YouTube Video
         vid_info = self.vidGen.retrieveVidInfo(0)
-        category_id = 34 # Comedy
         vid = YouTubeVideo(
             vid_info["title"],
-            vid_info["description"],
-            category_id
+            vid_info["description"]
         )
 
         # Generates vid and uploads video
         vid_file = self.vidGen.genComedyVid()
-        vid.uploadVideo(vid_file.name)
+        vid.uploadVideo(
+            video_file=vid_file.name,
+            tags=["comedy", "funny", "shorts", "jokes"],
+            category_id="24"
+        )
 
         # Adds default thumbnail
         vid.addThumbnail(
@@ -949,16 +950,18 @@ class YouTubeUploader():
         
         # Initializes YouTube Video
         vid_info = self.vidGen.retrieveVidInfo(1)
-        category_id = 24 # Entertainment
         vid = YouTubeVideo(
             vid_info["title"],
-            vid_info["description"],
-            category_id
+            vid_info["description"]
         )
 
         # Generates vid and uploads video
         vid_file = self.vidGen.genFactVid()
-        vid.uploadVideo(vid_file.name)
+        vid.uploadVideo(
+            video_file=vid_file.name,
+            tags=["facts", "learn", "shorts", "knowledge", "interesting", "cool"],
+            category_id="27"
+        )
 
         # Adds default thumbnail
         vid.addThumbnail(
@@ -978,18 +981,20 @@ class YouTubeUploader():
         
         # Initializes YouTube Video
         vid_info = self.vidGen.retrieveVidInfo(2)
-        category_id = 27 # Education
         vid = YouTubeVideo(
             f"{vid_info['title']}",
-            vid_info["description"],
-            category_id
+            vid_info["description"]
         )
         episode_number = vid.retrievePlaylist("PLizmHl7t7otdmEFw5RMV4tXdGNWklNk1d")+1
         vid.title = f"{vid_info['title']} (Episode #{episode_number})"
 
         # Generates vid and uploads video
         vid_file = self.vidGen.genWallstreetWavesVid()
-        vid.uploadVideo(vid_file.name)
+        vid.uploadVideo(
+            video_file=vid_file.name,
+            tags=["finance", "news", "wallstreetwaves", "overview", "daily"],
+            category_id="25"
+        )
 
         # Creates and sets thumbnail
         thumbnail = self.graphics.genWallStreetWavesThumbnail(
@@ -1015,11 +1020,12 @@ class YouTubeUploader():
 """ Firebase Functions """
 
 # The Google Cloud Config for this function is 2 vCPU and 2 Gi (gibibyte)
+# The timeout is also custom at 360 seconds.
 # 7:00 AM UTC -> 3:00 AM EST
 # Firebase function which generates and uploads videos to YouTube daily
 @scheduler_fn.on_schedule(schedule="every day 07:00")
 def uploadVideosDaily(event: scheduler_fn.ScheduledEvent) -> None:
-    
+
     # Retrieves YouTubeUploader functions
     youtubeUpload = YouTubeUploader()
 
@@ -1033,4 +1039,3 @@ def uploadVideosDaily(event: scheduler_fn.ScheduledEvent) -> None:
     youtubeUpload.createWallstreetWavesVid()
     
     return https_fn.Response("Success")
-
