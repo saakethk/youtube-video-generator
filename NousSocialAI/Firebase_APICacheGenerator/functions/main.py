@@ -577,6 +577,21 @@ class HumorAPI():
 
         return response
 
+class YouTubeStats():
+
+    def __init__(self):
+        self.key = "AIzaSyBqqiKnMWsXoaf7iTY3nFAMl9tj2SX_NqE"
+        self.channel_id = "UCEJ7HADGDrfejxsA500FrmQ"
+    
+    def getStats(self):
+        response = requests.get(f'https://www.googleapis.com/youtube/v3/channels?part=statistics&id={self.channel_id}&key={self.key}')
+        response_object = response.json()["items"][0]["statistics"]
+        return {
+            "views": response_object["viewCount"],
+            "vids": response_object["videoCount"],
+            "subs": response_object["subscriberCount"]
+        }
+
 """ Firebase Functions """
 
 # The Google Cloud Config for this function is 1 vCPU and 256 Mi (mebibyte)
@@ -584,7 +599,7 @@ class HumorAPI():
 # Firebase function to update api data daily to reduce redundant api calls
 @scheduler_fn.on_schedule(schedule="every day 05:00")
 def updateAPIDataDaily(event: scheduler_fn.ScheduledEvent) -> None:
-    
+
     # Retrieves relevant Firebase functions
     firebase = Firebase()
     
@@ -632,5 +647,10 @@ def updateAPIDataDaily(event: scheduler_fn.ScheduledEvent) -> None:
 
     firebase.addData("facts", apininjas.getFacts(5))
     # print(apininjas.getFacts(5))
+
+    # Updates data from YouTube Data API V3
+    youtube_stats_api = YouTubeStats()
+    
+    firebase.addData("youtube_stats", youtube_stats_api.getStats())
 
     return https_fn.Response("Success")

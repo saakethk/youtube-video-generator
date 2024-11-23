@@ -62,15 +62,15 @@ def sendWelcomeEmail(event: Event[DocumentSnapshot]) -> None:
         sub_id=data["sub_num"]
     )
 
-def test():
-    # Retrieves helper functions for Mailjet
-    mailjet = MailjetAPI()
+# def test():
+#     # Retrieves helper functions for Mailjet
+#     mailjet = MailjetAPI()
 
-    mailjet.sendWelcomeEmail(
-        email="saakethr.kesireddy@gmail.com",
-        firstname="saaketh",
-        lastname="kesireddy",
-        sub_id=0
-    )
+#     mailjet.sendWelcomeEmail(
+#         email="saakethr.kesireddy@gmail.com",
+#         firstname="saaketh",
+#         lastname="kesireddy",
+#         sub_id=0
+#     )
 
-test()
+# test()
