@@ -1,9 +1,9 @@
 # YouTube Video Generator
 
 ## What is it?
-This is a project that I chose to participate in because I wanted to take on a fullstack dev project and learn what it takes to create an app. The premise of Nous News is a news-first social app which emphasizes tracability to reduce the prevalence of the misinformation effect which is exascerbated by other social apps like X, Facebook, and Instagram.
+An attempt at a fully functional youtube channel that relies on a script which creates videos, renders them, and uploads them. It uses firebase functions, amazon web services, and google cloud to run a completely automated channel.
 
-Website: https://www.itsnous.com/
+Website: https://www.youtube.com/channel/UCEJ7HADGDrfejxsA500FrmQ/videos
 
 ## Technologies
  - Python
