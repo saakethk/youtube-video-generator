@@ -1,21 +1,12 @@
-<h1>
-  Description
-</h1>
-This repository contains the code for ItsNousV3 backend which is mostly hosted on firebase functions.
+# YouTube Video Generator
 
-<h2>
-  Disclaimer
-</h2>
-This is a private code repo. DO NOT BY ANY MEANS CHOOSE TO MAKE THIS REPO PUBLIC.
+## What is it?
+This is a project that I chose to participate in because I wanted to take on a fullstack dev project and learn what it takes to create an app. The premise of Nous News is a news-first social app which emphasizes tracability to reduce the prevalence of the misinformation effect which is exascerbated by other social apps like X, Facebook, and Instagram.
 
-<h2>
-  Technologies
-</h2>
-The current backend uses the following:
-<li>Python</li>
-<li>JSON</li>
+Website: https://www.itsnous.com/
 
-<h2>
-  Hosting
-</h2>
-The current backend is hosted on firebase functions which runs on google cloud servers. This is because of the ease of use and relatively low cost compared to alternatives. Some projects may use cloud alternatives like AWS for certain parts.
+## Technologies
+ - Python
+ - YouTube V3 API
+ - AWS
+ - Firebase Functions
