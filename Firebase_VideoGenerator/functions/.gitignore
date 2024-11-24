@@ -1,1 +1,3 @@
 *.local
+/venv
+/_pycache_

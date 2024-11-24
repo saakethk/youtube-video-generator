@@ -67,19 +67,6 @@ class Firebase():
     
     # Vars necessary for interacting with Firebase Database
     def __init__(self):
-        self.creds = credentials.Certificate({
-        "type": "service_account",
-        "project_id": "itsnousv3",
-        "private_key_id": "cc1824a69238032b5d84e30a4a5722535f96e1a9",
-        "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCRPznd614mVA6G\npYhV7+OPqQUsMQUAvHNpeRg7OX9cIfTqV6U/re+iDbGXn3E3rboD2rC0nKLyuAP1\nMx5E7ps+qfOYCxIJv9u8wX1millOjjzwoI5pRTJNNvYZD1BJJ8DfW0WmUEy3kNbx\n0dW8n83Da3jILhV1OM1sLfEr+0hXmfzZLzAi6fhDvynzCzdORGF6M8UjU5uMB/vI\nsOnF+Q3mdmXaO60Ff10+xRYcI6cqMhgjkQtmlBJiIgoM9wDgJbqUyAdJ6qRFT+K7\nzQotOdjdJucY0QL5vO87ob75zU5GqmxVH8h5mW1gsOnd1mqbmM2Yd8i3PeJlHstX\nEQLGgBzTAgMBAAECggEAA3mfyM940THxpwcO2/+BUk6Y8RW7KOlZWYysJ76YbXvi\ngDjYm01uDlKFjTsjWlGtwanZ0Hhu7Z+5eIRglQWgcT9ftKOPKuyMNVfryChHOrns\ne1VcEui062QFP1Q+d4Gb+7wTToddTocInYCHvJuWMLbBjQiNOuDBCXWP751zfaUI\nTWyBgL8oMk+CXOe/NOPjEPbJpwXVITWVD/sEzZpj9s/xSYiKUl4U8dYJKkjWj4A+\nsIZPW9MvpmbBHk+2bu4DUVGoPVmh2zMulPLZALOmDazUcIXPWWSzLVfR869U2qUW\nk79Y26BSZB7TM1436kBjw38Oo/FqjAERAel2VgciAQKBgQDCaALVDyYUANyzIDWL\nypck+0EmBAB1SBVFPLAEJ6/pK8G5RH6zsLzOb5PvK/+LAKQ/Zvug3BxrQU8CVgeK\nj3zWrUcFs8PG67xRRi1GgFvPg6SQLMayRvCQHE3B5YunBXyH9x4lC6ypGOsWLgmr\n5EB4cTOhfSWOA0zTVyCND1E7mwKBgQC/Q/rl+Yj2TrARiAqMt2qhlNlgyTRuQjL+\nyBJm0qmKaRad+gLgCj7AdJU7yKFcG2G74Fa9yL7sF/EmPAYynk0YQh7K5Daq7abe\nf9b0unmrF7t2s4J/2VIn7oMfxa35N7gkOxR6dENLZE8UooHCjs41LAe5BddFITry\nSfwsp+xDKQKBgCp4KG49Efd6vLwRBEGWr3Avx2qzoxn79lGa0WUG+oH4wihkEz3U\nFVsPuwSb2waVzEvhhoT8sOSpbsY23wzhDcekMQjI3bMeGpSyvP9S2Tu7KX8pmPqn\nTrRcyovaRqjlJPBbBuXW6BBE1k6RHiHECmWFbV8RBNxCUk01EnJeb0OTAoGABxSD\nIyQ7l7KN/fglO9RGVDjoWxbXpAU7Ugch90BxGjiNp8drd9OpQwKNy6q/nmM9GPFT\nBK97sc2pFZs/N3x4qh84eJY+F9G4TaA52tFUU6sLO3elqwnmaqf/npt4tzMC1ASD\n24yWOSI7cy4Y05TpuToqBwVaVKrIPdPTS+vjaRECgYAVKH3x3/E6WuD4uHT/JREZ\nAJAofVAwokrM/CHP9vFf1YwpjG79Q0voN/rt/Z5Wi/91FVBw043NcGeNksu8+Ude\nYejYD6h7VTQvqAk64wWPBNFHtLs3FWFEoq0xH7DiCs5+LdpOs0cHhTuTOVbTnLGU\nhfKvczNHj4GrmC2TvDHTjw==\n-----END PRIVATE KEY-----\n",
-        "client_email": "firebase-adminsdk-66v6t@itsnousv3.iam.gserviceaccount.com",
-        "client_id": "116580107322819075852",
-        "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-        "token_uri": "https://oauth2.googleapis.com/token",
-        "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-        "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-66v6t%40itsnousv3.iam.gserviceaccount.com",
-        "universe_domain": "googleapis.com"
-    })
     
     # Adds data to firebase database
     @detectStatus
